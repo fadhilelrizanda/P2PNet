@@ -68,7 +68,7 @@ def main(args, debug=False):
     width, height = img_raw.size
     new_width = width // 128 * 128
     new_height = height // 128 * 128
-    img_raw = img_raw.resize((new_width, new_height), Image.ANTIALIAS)
+    img_raw = img_raw.resize((new_width, new_height), Image.LANCZOS)
     # pre-proccessing
     img = transform(img_raw)
 
