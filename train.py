@@ -73,6 +73,7 @@ def get_args_parser():
                         help='frequency of evaluation, default setting is evaluating in every 5 epoch')
     parser.add_argument('--gpu_id', default=0, type=int, help='the gpu used for training')
 
+    parser.add_argument('--pretrained', default='', help='pretrained from checkpoint')
     return parser
 
 def main(args):
@@ -143,6 +144,11 @@ def main(args):
             optimizer.load_state_dict(checkpoint['optimizer'])
             lr_scheduler.load_state_dict(checkpoint['lr_scheduler'])
             args.start_epoch = checkpoint['epoch'] + 1
+            
+    if args.pretrained:
+        checkpoint = torch.load(args.pretrained, map_location='cpu')
+        model_without_ddp.load_state_dict(checkpoint['model'])
+            
 
     print("Start training")
     start_time = time.time()
